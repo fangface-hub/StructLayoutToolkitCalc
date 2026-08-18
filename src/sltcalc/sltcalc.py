@@ -76,6 +76,9 @@ class SltEval:
                 raise NameError(f"Undefined variable: {node.id}")
             return self.env[node.id]
 
+        if isinstance(node, ast.Attribute):
+            return getattr(self._eval(node.value), node.attr)
+
         if isinstance(node, ast.List):
             return [self._eval(element) for element in node.elts]
 

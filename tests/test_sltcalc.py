@@ -1,4 +1,6 @@
 """Tests for the SltEval class in sltcalc."""
+from dataclasses import dataclass
+
 import pytest
 
 from sltcalc import SltEval
@@ -31,6 +33,18 @@ def test_eval_uses_environment_variables():
     """Test that SltEval correctly uses environment variables in expressions."""
     evaluator = SltEval({"offset": 8, "width": 3})
     assert evaluator.eval("offset + width * 2") == 14
+
+
+def test_eval_uses_dataclass_attributes():
+    """Test that SltEval can use attributes from dataclass values."""
+
+    @dataclass
+    class Layout:
+        offset: int
+        width: int
+
+    evaluator = SltEval({"layout": Layout(offset=8, width=3)})
+    assert evaluator.eval("layout.offset + layout.width * 2") == 14
 
 
 @pytest.mark.parametrize(

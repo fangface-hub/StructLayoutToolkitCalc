@@ -68,6 +68,7 @@ SltEval evaluates a restricted subset of Python expression AST nodes.
 ### Variables
 
 - Variable lookup from the evaluator environment (SltEval(env))
+- Attribute access on environment values (for example: obj.value)
 
 ### Binary operators
 
@@ -94,9 +95,10 @@ SltEval evaluates a restricted subset of Python expression AST nodes.
 
 - Ternary expression: a if condition else b
 
-### Subscript access
+### Attribute and subscript access
 
 - Index/key access (for example: arr[0], mapping["key"])
+- Attribute access is supported (for example: obj.value)
 - Nested access is supported (for example: access key "items" and then index 0)
 
 ### Function calls
@@ -108,7 +110,6 @@ SltEval evaluates a restricted subset of Python expression AST nodes.
 
 ## Not supported
 
-- Attribute access (for example: obj.value)
 - Set literals in expressions
 - Non-name call targets (for example: (lambda x: x)(1))
 
