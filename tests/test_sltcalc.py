@@ -3,7 +3,12 @@ from dataclasses import dataclass
 
 import pytest
 
-from sltcalc import SltEval
+from sltcalc import SAFE_FUNCS, SltEval
+
+
+def test_safe_funcs_is_publicly_exported():
+    """Test that SAFE_FUNCS is available from the package API."""
+    assert SAFE_FUNCS["abs"](-3) == 3
 
 
 @pytest.mark.parametrize(
