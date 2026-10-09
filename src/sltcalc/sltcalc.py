@@ -2,6 +2,7 @@
    offsets, sizes, and field values within StructLayoutToolkit."""
 import ast
 import operator
+from functools import lru_cache
 
 OPS = {
     ast.Add: operator.add,
@@ -47,6 +48,12 @@ SAFE_FUNCS = {
 }
 
 
+@lru_cache(maxsize=2048)
+def _parse(expr: str) -> ast.AST:
+    """Parse an expression once; the tree is never mutated."""
+    return ast.parse(expr, mode="eval").body
+
+
 class SltEval:
     """A safe, deterministic expression evaluator for computing bit‑accurate
        offsets, sizes, and field values within StructLayoutToolkit."""
@@ -63,8 +70,7 @@ class SltEval:
         Returns:
             The result of the evaluated expression.
         """
-        node = ast.parse(expr, mode="eval").body
-        return self._eval(node)
+        return self._eval(_parse(expr))
 
     def _eval(self, node) -> any:
         """Recursively evaluate an AST node."""
