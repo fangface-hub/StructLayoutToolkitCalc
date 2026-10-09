@@ -182,19 +182,26 @@ def test_eval_raises_value_error_for_unsupported_expression():
         }),
         ("(1, 2, 3)", (1, 2, 3)),
         ("[1, 2, 3][1]", 2),
+        ("[1, 2, 3, 4][1:3]", [2, 3]),
+        ("[1, 2, 3, 4][:2]", [1, 2]),
+        ("[1, 2, 3, 4][::2]", [1, 3]),
+        ("[1, 2, 3, 4][-2:]", [3, 4]),
+        ("[1, 2, 3, 4][::-1]", [4, 3, 2, 1]),
         ("{'a': 10, 'b': 20}['b']", 20),
         ("('x', 'y', 'z')[2]", "z"),
+        ("('x', 'y', 'z')[1:]", ("y", "z")),
         ("{'items': [4, 5, 6]}['items'][0]", 4),
     ],
 )
 def test_eval_collections_and_subscript(expr, expected):
-    """Test that SltEval supports list/dict/tuple literals and indexing."""
+    """Test that SltEval supports collection literals, indexing, and slicing."""
     evaluator = SltEval()
     assert evaluator.eval(expr) == expected
 
 
 def test_eval_subscript_with_environment_variable():
-    """Test indexing into collections provided via environment variables."""
+    """Test indexing and slicing collections from environment variables."""
     evaluator = SltEval({"arr": [10, 20, 30], "mapping": {"k": 7}})
     assert evaluator.eval("arr[2]") == 30
+    assert evaluator.eval("arr[1:]") == [20, 30]
     assert evaluator.eval("mapping['k']") == 7

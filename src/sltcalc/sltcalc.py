@@ -91,6 +91,13 @@ class SltEval:
         if isinstance(node, ast.Tuple):
             return tuple(self._eval(element) for element in node.elts)
 
+        if isinstance(node, ast.Slice):
+            return slice(
+                self._eval(node.lower) if node.lower is not None else None,
+                self._eval(node.upper) if node.upper is not None else None,
+                self._eval(node.step) if node.step is not None else None,
+            )
+
         if isinstance(node, ast.Dict):
             return {
                 self._eval(key): self._eval(value)

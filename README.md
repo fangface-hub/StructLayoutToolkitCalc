@@ -98,6 +98,8 @@ SltEval evaluates a restricted subset of Python expression AST nodes.
 ### Attribute and subscript access
 
 - Index/key access (for example: arr[0], mapping["key"])
+- Slicing (for example: arr[1:4], arr[:3], arr[::2], arr[::-1])
+- Slice bounds and steps may be omitted; negative indices and steps follow Python sequence semantics
 - Attribute access is supported (for example: obj.value)
 - Nested access is supported (for example: access key "items" and then index 0)
 
