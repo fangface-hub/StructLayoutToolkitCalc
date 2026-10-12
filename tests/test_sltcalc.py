@@ -90,6 +90,9 @@ def test_eval_conditional_expression(env, expr, expected):
         ("1 is not 2", True),
         ("2 in [1, 2, 3]", True),
         ("9 not in [1, 2, 3]", True),
+        ("b'ab' == b'ab'", True),
+        ("bytearray(b'ab') == b'ab'", True),
+        ("bytes([97, 98]) < bytearray(b'ac')", True),
     ],
 )
 def test_eval_comparison_expression(expr, expected):
@@ -132,6 +135,8 @@ def test_eval_call_with_unsupported_callable_expression_raises_value_error():
         ("min(3, 1, 9)", 1),
         ("max(3, 1, 9)", 9),
         ("max(2, abs(-5))", 5),
+        ("bytes([97, 98])", b"ab"),
+        ("bytearray([97, 98])", bytearray(b"ab")),
     ],
 )
 def test_eval_safe_functions(expr, expected):

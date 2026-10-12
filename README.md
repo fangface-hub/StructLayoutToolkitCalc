@@ -106,9 +106,11 @@ SltEval evaluates a restricted subset of Python expression AST nodes.
 ### Function calls
 
 - Built-in allowlist: abs(...), all(...), any(...), len(...),
-    min(...), max(...), round(...), sorted(...), sum(...)
+    bytes(...), bytearray(...), min(...), max(...), round(...),
+    sorted(...), sum(...)
 - Callables passed through environment are allowed
     (for example: SltEval({"triple": triple}) then triple(4))
+- Byte strings and byte arrays can be compared using standard comparison operators.
 
 ## Not supported
 
@@ -116,3 +118,25 @@ SltEval evaluates a restricted subset of Python expression AST nodes.
 - Non-name call targets (for example: (lambda x: x)(1))
 
 Unsupported constructs raise ValueError with an Unsupported expression message.
+
+## Testing
+
+Run the complete test suite:
+
+```powershell
+uv run pytest -q
+```
+
+Generate a branch coverage report in the terminal:
+
+```powershell
+uv run pytest --cov=sltcalc --cov-branch --cov-report=term-missing -q
+```
+
+Generate a browsable HTML coverage report in `htmlcov/`:
+
+```powershell
+uv run pytest --cov=sltcalc --cov-branch --cov-report=html -q
+```
+
+Open `htmlcov/index.html` in a browser to inspect uncovered lines and branches.

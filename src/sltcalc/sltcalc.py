@@ -39,6 +39,8 @@ SAFE_FUNCS = {
     "abs": abs,
     "all": all,
     "any": any,
+    "bytes": bytes,
+    "bytearray": bytearray,
     "len": len,
     "min": min,
     "max": max,
